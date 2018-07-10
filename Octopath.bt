@@ -1,0 +1,215 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: OctoPath.bt
+//   Authors: SleepyPrince
+//   Version: 0.1
+//   Purpose: Octopath Traveler Prologue Demo Save File Template
+//------------------------------------------------
+typedef struct dataStruct{
+    string name <hidden=true>;
+    FSkip(4);
+    string property <hidden=true>;
+    if (property == "IntProperty")
+    {
+        FSkip(9);
+        int value;
+        FSkip(4);
+    }else if(property == "ArrayProperty"){
+        FSkip(8);    
+        uint size <hidden=true>;
+        string type <hidden=true>;
+        FSkip(1);
+        int value;
+        FSkip(4);
+    }
+};
+
+enum <uint> itemID { \
+// Item
+Healing_Grape=1, Healing_Grape_M=2, Healing_Grape_L=3, Inspiriting_Plum=4, Inspiriting_Plum_M=5, Inspiriting_Plum_L=6, \
+Energizing_Pomergranate = 7, Energizing_Pomergranate_M = 8, Energizing_Pomergranate_L = 9, Refreshing_Jam=10, Revitalizing_Jam=11, \
+Olive_of_Life=12, Olive_of_Life_M=13, Olive_of_Life_L=14, Herb_of_Healing=20, Herb_of_Clamor=21, Herb_of_Light=22, Herb_of_Clarity=23, Herb_of_Awakening=24, Herb_of_Valor=25, Herb_of_Revival=26, \
+Bottle_of_Poison_Dust=30, Bottle_of_Blinding_Dust=31, Bottle_of_Befudding_Dust=32, Bottle_of_Sleeping_Dust=33, \
+// Soulstone
+Fire_Soulstone=40, Fire_Soulstone_M=41, Fire_Soulstone_L=42, Ice_Soulstone=43, Ice_Soulstone_M=44, Ice_Soulstone_L=45, Thunder_Soulstone=46, \
+Thunder_Soulstone_M=47, Thunder_Soulstone_L=48, Wind_Soulstone=49, Wind_Soulstone_M=50, Wind_Soulstone_L=51, \
+Light_Soulstone=52, Light_Soulstone_M=53, Light_Soulstone_L=54, Shadow_Soulstone=55, Shadow_Soulstone_M=56, Shadow_Soulstone_L=57, \
+// Nut
+Nourishing_Nut=60, Invigorating_Nut=63, Fortifying_Nut=66, Tough_Nut=69, Magic_Nut=72, Resistant_Nut=75, Sharp_Nut=78, Slippery_Nut=81, Critical_Nut=84, Light_Nut=87, \
+// Misc
+Scrap_of_Rope=90, Candy=92, Tree_Nut=99, Empty_Coin_Pouch=101, Old_Coin=135, Copper_filled_Pouch=136, \
+// Sword
+Mirage_Blade=1021, Heavy_Blade=1024, Captains_Sword=1027, Greatsword=1028, \
+// Spear
+Sunlands_Spear=1122, War_Lance=1123, Silver_Spear=1124, Arcane_Glaive=1125, \
+// Dagger
+Piercing_Dagger=1223, Falcon_Dagger=1224, Arcane_Knife=1226, Stinging_Dagger=1227, Iron_Dagger=1228, \
+// Axe
+Magus_Hatchet=1322, Steel_Axe=1325, Cleaver=1326, Enchanted_Axe=1327, Battle_Axe=1330, Arcane_Hatchet=1331, Iron_Axe=1332, \
+// Bow
+Elemental_Bow=1417, Soldiers_Longbow=1422, Killer_Bow=1425, Arcane_Bow=1426, Wolfs_Bow=1427, Stone_Bow=1428, Composite_Bow=1429, \
+// Staff
+Mages_Staff=1519, Pole_Mace=1522, Composite_Staff=1528, Quartz_Rod=1529, Staff=1532, \
+// Shield
+Elusive_Shield=1613, Kite_Shield=1615, Sturdy_Shield=1616, Round_Shield=1617, Buckler=1618, \
+// Headgear
+Saintly_Tiara=1728, Flying_Helm=1731, Black_Cap=1732, Headgear=1733, Circlet=1734, Silver_Hairpiece=1736, Ordinary_Hat=1742, \
+// Body Armor
+Elemental_Light_Armor=1822, Fur_Coat=1823, Silver_Vest=1833, Iron_Armor=1836, Iron_Vest=1838, Peacebringers_Garb=1839, Black_Attire=1842, Wind_Attire=18, Traditional_Dancer_Grab=1843, Robe=1844, \
+// Accessory
+Mightly_Belt=1914, Stimulating_Necklace=1919, Empowering_Ring=1932, Empowering_Earring=1939, Stimulating_Earring=1940, Protective_Earring=1941, Unerring_Earring=1942, Enlightening_Earring=1943, Sprightly_Earring=1944, Critical_Earring=1945, Inferno_Amulet=1949, Wind_Amulet=1957, Wakeful_Stone=1962, Articulate_Stone=1963, Bright_Stone=1964, \
+// Material
+Soothing_Seed=2500, Soothing_Dust=2501, Purifying_Seed=2502, Purifying_Dust=2503, Injurious_Seed=2504, Injurious_Dust=2505, Ruinous_Seed=2506, Ruinous_Dust=2507, \
+Noxroot=2516, Sleepweed=2517, Addlewort=2518, Essence_of_Grape=2519, Essence_of_Plum=2520, Essence_of_Pomegranate=2521, Olive_Bloom=2522, Curious_Bloom=2523 \
+};
+
+typedef struct Item {
+    string ItemID <hidden=true>;
+    FSkip(4);
+    string IDproperty <hidden=true>;
+    FSkip(9);
+    itemID id;
+    FSkip(4);
+    string Num <hidden=true>;
+    FSkip(4);
+    string Numproperty <hidden=true>;
+    FSkip(9);
+    uint amount;
+    FSkip(4);
+};
+
+typedef struct Character {
+    dataStruct ID <hidden=true>;
+    dataStruct Level <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Exp <read=dataStructRead, write=dataStructWrite>;
+    dataStruct RawHP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct RawMP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct StatusEffect <hidden=true>;
+    dataStruct FirstJobID <read=dataStructRead>;
+    dataStruct SecondJobID <read=dataStructRead>;
+    dataStruct JobPoint <read=dataStructRead, write=dataStructWrite>;
+
+    // Equipment
+    FSeek(FindFirst("Sword_",true,false,0,0,1,FTell()));
+    dataStruct Sword <read=equipRead>;
+    dataStruct Lance <read=equipRead>;
+    dataStruct Dagger <read=equipRead>;
+    dataStruct Axe <read=equipRead>;
+    dataStruct Bow <read=equipRead>;
+    dataStruct Rod <read=equipRead>;
+    dataStruct Shield <read=equipRead>;
+    dataStruct Head <read=equipRead>;
+    dataStruct Body <read=equipRead>;
+    dataStruct Accessory <read=equipRead>;
+    dataStruct Accessory <read=equipRead>;
+
+    // DopingParam ?
+    FSeek(FindFirst("HP_",true,false,0,0,1,FTell()));
+    dataStruct HP <hidden=true>;
+    dataStruct MP <hidden=true>;
+    dataStruct BP <hidden=true>;
+    dataStruct SP <hidden=true>;
+    dataStruct ATK <hidden=true>;
+    dataStruct DEF <hidden=true>;
+    dataStruct MATK <hidden=true>;
+    dataStruct MDEF <hidden=true>;
+    dataStruct ACC <hidden=true>;
+    dataStruct EVA <hidden=true>;
+    dataStruct CON <hidden=true>;
+    dataStruct AGI <hidden=true>;
+};
+
+local int i;
+
+FSeek(FindFirst("Money_")+0x42);
+uint Gold <format=decimal,comment="Gold: Max 9,999,999">;
+FSeek(FindFirst("PlaySecond")+0x24);
+uint GameTime <format=decimal,comment="Game time (in seconds)">;
+
+// ItemList
+FSeek(0);
+struct ItemList {
+    local TFindResults itemAddr = FindAll("ItemID_8", true, false, 0, 0, 1, 0, FindFirst("PlayerParty"));
+    for ( i = 0; i < itemAddr.count; i++){
+        FSeek(itemAddr.start[i]);
+        Item item <read=itemRead>;
+    }
+} itemList;
+
+// Character
+// ID:Name
+// 1:Olberic
+// 2:Tressa
+// 3:Cyrus
+// 4:Primrose
+// 5:H'annit
+// 6:Therion
+// 7:Ophilia
+// 8:Alfyn
+local TFindResults CharacterAddr = FindAll( "CharacterID" );
+for ( i = 0; i < 8; i++){
+    FSeek(CharacterAddr.start[i]);    
+    Character character <read=charRead>;
+}
+
+enum <uint> CharName {Olberic=1, Tressa, Cyrus, Primrose, Hannit, Therion, Ophilia, Alfyn};
+
+string charRead(Character &c){
+    CharName name;
+    name = c.ID.value;
+    return EnumToString(name);
+    /*switch (c.ID.value){
+        case 1:
+            return "Olberic";
+        case 2:
+            return "Tressa";
+        case 3:
+            return "Cyrus";
+        case 4:
+            return "Primrose";
+        case 5:
+            return "H'annit";
+        case 6:
+            return "Therion";
+        case 7:
+            return "Ophilia";
+        case 8:
+            return "Alfyn";
+        default:
+            return "Unknown";
+    }*/
+}
+
+string dataStructRead(dataStruct &d){
+    string s;
+    SPrintf(s, "%d", d.value);    
+    return s;
+}
+
+void dataStructWrite(dataStruct &d, string s){
+    d.value = Atoi(s);
+}
+
+string equipRead(dataStruct &d){
+    if (d.value == -1){
+        return "None (-1)";
+    }else{
+        itemID i;
+        string s;
+        i = d.value;
+        SPrintf(s, "%s (%d)", EnumToString(i), i);
+        return s;
+    }
+}
+
+string itemRead (Item &i){
+    string s;
+    string id;
+    if (EnumToString(i.id) != ""){
+        SPrintf(s, "%s: %d", EnumToString(i.id), i.amount);
+    }else{
+        SPrintf(s, "%d: %d", i.id, i.amount);
+    }  
+    return s;
+}
