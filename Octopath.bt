@@ -3,8 +3,8 @@
 //
 //      File: OctoPath.bt
 //   Authors: SleepyPrince
-//   Version: 0.1
-//   Purpose: Octopath Traveler Prologue Demo Save File Template
+//   Version: 0.1.1
+//   Purpose: Octopath Traveler Save File Template
 //------------------------------------------------
 typedef struct dataStruct{
     string name <hidden=true>;
@@ -86,8 +86,8 @@ typedef struct Character {
     dataStruct RawHP <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawMP <read=dataStructRead, write=dataStructWrite>;
     dataStruct StatusEffect <hidden=true>;
-    dataStruct FirstJobID <read=dataStructRead>;
-    dataStruct SecondJobID <read=dataStructRead>;
+    dataStruct FirstJobID <read=jobRead>;
+    dataStruct SecondJobID <read=jobRead>;
     dataStruct JobPoint <read=dataStructRead, write=dataStructWrite>;
 
     // Equipment
@@ -191,14 +191,50 @@ void dataStructWrite(dataStruct &d, string s){
     d.value = Atoi(s);
 }
 
+enum <int> JobID {Merchant=0, Thief=1, Warrior=2, Hunter=3, Cleric=4, Dancer=5, Scholar=6, Apothecary=7};
+
+string jobRead(dataStruct &d){
+    if (d.value == -1){
+        return "None (-1)";
+    }else{
+        string s;        
+        JobID i = d.value;
+        SPrintf(s, "%s (%d)", EnumToString(i), i);
+        return s;
+    }
+}
+
 string equipRead(dataStruct &d){
     if (d.value == -1){
         return "None (-1)";
     }else{
-        itemID i;
+        itemID i = d.value;
         string s;
-        i = d.value;
-        SPrintf(s, "%s (%d)", EnumToString(i), i);
+        string type;
+        if (i>=1000 && i<1100){
+            type = "Sword";
+        }else if( i>=1100 && i<1200 ){
+            type = "Spear";
+        }else if( i>=1200 && i<1300 ){
+            type = "Dagger";
+        }else if( i>=1300 && i<1400 ){
+            type = "Axe";
+        }else if( i>=1400 && i<1500 ){
+            type = "Bow";
+        }else if( i>=1500 && i<1600 ){
+            type = "Staff";
+        }else if( i>=1600 && i<1700 ){
+            type = "Shield";
+        }else if( i>=1700 && i<1800 ){
+            type = "Head";
+        }else if( i>=1800 && i<1900 ){
+            type = "Body";
+        }else if( i>=1900 && i<2000 ){
+            type = "Accessory";
+        }else{
+            type = "Invalid";
+        }
+        SPrintf(s, "%s: %s (%d)", type, EnumToString(i), i);
         return s;
     }
 }
@@ -209,7 +245,7 @@ string itemRead (Item &i){
     if (EnumToString(i.id) != ""){
         SPrintf(s, "%s: %d", EnumToString(i.id), i.amount);
     }else{
-        SPrintf(s, "%d: %d", i.id, i.amount);
+        SPrintf(s, "(%d): %d", i.id, i.amount);
     }  
     return s;
 }
