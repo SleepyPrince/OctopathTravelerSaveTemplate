@@ -3,13 +3,13 @@
 //
 //      File: OctoPath.bt
 //   Authors: SleepyPrince
-//   Version: 0.1.1
+//   Version: 0.1
 //   Purpose: Octopath Traveler Save File Template
 //------------------------------------------------
 typedef struct dataStruct{
-    string name <hidden=true>;
+    string name <read=dataStructRead, write=dataStructWrite>;
     FSkip(4);
-    string property <hidden=true>;
+    string property <read=dataStructRead, write=dataStructWrite>;
     if (property == "IntProperty")
     {
         FSkip(9);
@@ -17,8 +17,8 @@ typedef struct dataStruct{
         FSkip(4);
     }else if(property == "ArrayProperty"){
         FSkip(8);    
-        uint size <hidden=true>;
-        string type <hidden=true>;
+        uint size <read=dataStructRead, write=dataStructWrite>;
+        string type <read=dataStructRead, write=dataStructWrite>;
         FSkip(1);
         int value;
         FSkip(4);
@@ -27,7 +27,7 @@ typedef struct dataStruct{
 
 enum <uint> itemID { \
 // Item
-Healing_Grape=1, Healing_Grape_M=2, Healing_Grape_L=3, Inspiriting_Plum=4, Inspiriting_Plum_M=5, Inspiriting_Plum_L=6, \
+Healing_Grape=1, Healing_Grape_M=2, Healing_Grape_Bunch=3, Inspiriting_Plum=4, Inspiriting_Plum_M=5, Inspiriting_Plum_Basket=6, \
 Energizing_Pomergranate = 7, Energizing_Pomergranate_M = 8, Energizing_Pomergranate_L = 9, Refreshing_Jam=10, Revitalizing_Jam=11, \
 Olive_of_Life=12, Olive_of_Life_M=13, Olive_of_Life_L=14, Herb_of_Healing=20, Herb_of_Clamor=21, Herb_of_Light=22, Herb_of_Clarity=23, Herb_of_Awakening=24, Herb_of_Valor=25, Herb_of_Revival=26, \
 Bottle_of_Poison_Dust=30, Bottle_of_Blinding_Dust=31, Bottle_of_Befudding_Dust=32, Bottle_of_Sleeping_Dust=33, \
@@ -65,27 +65,27 @@ Noxroot=2516, Sleepweed=2517, Addlewort=2518, Essence_of_Grape=2519, Essence_of_
 };
 
 typedef struct Item {
-    string ItemID <hidden=true>;
+    string ItemID <read=dataStructRead, write=dataStructWrite>;
     FSkip(4);
-    string IDproperty <hidden=true>;
+    string IDproperty <read=dataStructRead, write=dataStructWrite>;
     FSkip(9);
     itemID id;
     FSkip(4);
-    string Num <hidden=true>;
+    string Num <read=dataStructRead, write=dataStructWrite>;
     FSkip(4);
-    string Numproperty <hidden=true>;
+    string Numproperty <read=dataStructRead, write=dataStructWrite>;
     FSkip(9);
     uint amount;
     FSkip(4);
 };
 
 typedef struct Character {
-    dataStruct ID <hidden=true>;
+    dataStruct ID <read=dataStructRead, write=dataStructWrite>;
     dataStruct Level <read=dataStructRead, write=dataStructWrite>;
     dataStruct Exp <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawHP <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawMP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct StatusEffect <hidden=true>;
+    dataStruct StatusEffect <read=dataStructRead, write=dataStructWrite>;
     dataStruct FirstJobID <read=jobRead>;
     dataStruct SecondJobID <read=jobRead>;
     dataStruct JobPoint <read=dataStructRead, write=dataStructWrite>;
@@ -106,18 +106,18 @@ typedef struct Character {
 
     // DopingParam ?
     FSeek(FindFirst("HP_",true,false,0,0,1,FTell()));
-    dataStruct HP <hidden=true>;
-    dataStruct MP <hidden=true>;
-    dataStruct BP <hidden=true>;
-    dataStruct SP <hidden=true>;
-    dataStruct ATK <hidden=true>;
-    dataStruct DEF <hidden=true>;
-    dataStruct MATK <hidden=true>;
-    dataStruct MDEF <hidden=true>;
-    dataStruct ACC <hidden=true>;
-    dataStruct EVA <hidden=true>;
-    dataStruct CON <hidden=true>;
-    dataStruct AGI <hidden=true>;
+    dataStruct HP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct MP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct BP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct SP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct ATK <read=dataStructRead, write=dataStructWrite>;
+    dataStruct DEF <read=dataStructRead, write=dataStructWrite>;
+    dataStruct MATK <read=dataStructRead, write=dataStructWrite>;
+    dataStruct MDEF <read=dataStructRead, write=dataStructWrite>;
+    dataStruct ACC <read=dataStructRead, write=dataStructWrite>;
+    dataStruct EVA <read=dataStructRead, write=dataStructWrite>;
+    dataStruct CON <read=dataStructRead, write=dataStructWrite>;
+    dataStruct AGI <read=dataStructRead, write=dataStructWrite>;
 };
 
 local int i;
@@ -148,7 +148,7 @@ struct ItemList {
 // 7:Ophilia
 // 8:Alfyn
 local TFindResults CharacterAddr = FindAll( "CharacterID" );
-for ( i = 0; i < 8; i++){
+for ( i = 0; i < 10; i++){
     FSeek(CharacterAddr.start[i]);    
     Character character <read=charRead>;
 }
