@@ -65,15 +65,15 @@ Noxroot=2516, Sleepweed=2517, Addlewort=2518, Essence_of_Grape=2519, Essence_of_
 };
 
 typedef struct Item {
-    string ItemID <read=dataStructRead, write=dataStructWrite>;
+    string idname <hidden=true>;
     FSkip(4);
-    string IDproperty <read=dataStructRead, write=dataStructWrite>;
+    string IDproperty <hidden=true>;
     FSkip(9);
     itemID id;
     FSkip(4);
-    string Num <read=dataStructRead, write=dataStructWrite>;
+    string Num <hidden=true>;
     FSkip(4);
-    string Numproperty <read=dataStructRead, write=dataStructWrite>;
+    string Numproperty <hidden=true>;
     FSkip(9);
     uint amount;
     FSkip(4);
@@ -85,7 +85,7 @@ typedef struct Character {
     dataStruct Exp <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawHP <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawMP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct StatusEffect <read=dataStructRead, write=dataStructWrite>;
+    dataStruct StatusEffect <hidden=true>;
     dataStruct FirstJobID <read=jobRead>;
     dataStruct SecondJobID <read=jobRead>;
     dataStruct JobPoint <read=dataStructRead, write=dataStructWrite>;
@@ -106,18 +106,18 @@ typedef struct Character {
 
     // DopingParam ?
     FSeek(FindFirst("HP_",true,false,0,0,1,FTell()));
-    dataStruct HP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct MP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct BP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct SP <read=dataStructRead, write=dataStructWrite>;
-    dataStruct ATK <read=dataStructRead, write=dataStructWrite>;
-    dataStruct DEF <read=dataStructRead, write=dataStructWrite>;
-    dataStruct MATK <read=dataStructRead, write=dataStructWrite>;
-    dataStruct MDEF <read=dataStructRead, write=dataStructWrite>;
-    dataStruct ACC <read=dataStructRead, write=dataStructWrite>;
-    dataStruct EVA <read=dataStructRead, write=dataStructWrite>;
-    dataStruct CON <read=dataStructRead, write=dataStructWrite>;
-    dataStruct AGI <read=dataStructRead, write=dataStructWrite>;
+    dataStruct HP <hidden=true>;
+    dataStruct MP <hidden=true>;
+    dataStruct BP <hidden=true>;
+    dataStruct SP <hidden=true>;
+    dataStruct ATK <hidden=true>;
+    dataStruct DEF <hidden=true>;
+    dataStruct MATK <hidden=true>;
+    dataStruct MDEF <hidden=true>;
+    dataStruct ACC <hidden=true>;
+    dataStruct EVA <hidden=true>;
+    dataStruct CON <hidden=true>;
+    dataStruct AGI <hidden=true>;
 };
 
 local int i;
@@ -125,7 +125,7 @@ local int i;
 FSeek(FindFirst("Money_")+0x42);
 uint Gold <format=decimal,comment="Gold: Max 9,999,999">;
 FSeek(FindFirst("PlaySecond")+0x24);
-uint GameTime <format=decimal,comment="Game time (in seconds)">;
+uint PlayTime <format=decimal,comment="Play time (in seconds)">;
 
 // ItemList
 FSeek(0);
@@ -148,7 +148,7 @@ struct ItemList {
 // 7:Ophilia
 // 8:Alfyn
 local TFindResults CharacterAddr = FindAll( "CharacterID" );
-for ( i = 0; i < 10; i++){
+for ( i = 0; i < 8; i++){
     FSeek(CharacterAddr.start[i]);    
     Character character <read=charRead>;
 }
