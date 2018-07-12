@@ -80,7 +80,7 @@ typedef struct Item {
 };
 
 typedef struct Character {
-    dataStruct ID <read=dataStructRead, write=dataStructWrite>;
+    dataStruct ID <hidden=true>;
     dataStruct Level <read=dataStructRead, write=dataStructWrite>;
     dataStruct Exp <read=dataStructRead, write=dataStructWrite>;
     dataStruct RawHP <read=dataStructRead, write=dataStructWrite>;
