@@ -1,0 +1,25 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Script File
+//
+//   Authors: SleepyPrince
+//   Purpose: Extract Octopath Traveler Items ID
+//------------------------------------------------
+int i;
+int id[2600];
+itemID item;
+for (i=0; i<2000; i++){
+    if (itemList.item[i].id == 0) break;    
+    id[itemList.item[i].id] = itemList.item[i].amount;
+}
+OutputPaneClear();
+Printf("ID\tName\tAmount\n");
+for (i=1; i<2600; i++){
+    if(id[i] != 0){
+        item = i;
+        if (EnumToString(item) != ""){
+            Printf("%d\t%s\t%d\n", i, EnumToString(item), id[i]);
+        }else{
+            Printf("%d\t\t%d\n", i, id[i]);  
+        }      
+    }    
+}
