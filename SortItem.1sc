@@ -1,0 +1,28 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Script File
+//
+//   Authors: SleepyPrince
+//   Purpose: Sort Inventory by ID
+//------------------------------------------------
+int i;
+int id[2600];
+int slot=0;
+
+OutputPaneClear();
+
+for (i=0; i<2000; i++){
+    if (itemList.item[i].id != 0) slot++;
+    id[itemList.item[i].id] = itemList.item[i].amount;
+}
+
+Printf("Number of items: %d\n", slot);
+
+for (i=1,slot=0; i<2600; i++){
+    if(id[i] != 0){
+        itemList.item[slot].id = i;
+        itemList.item[slot].amount = id[i];
+        slot++;
+    }
+}
+
+Printf("Sorted %d items", slot);

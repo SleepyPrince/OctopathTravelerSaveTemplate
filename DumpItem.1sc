@@ -8,7 +8,7 @@ int i;
 int id[2600];
 itemID item;
 for (i=0; i<2000; i++){
-    if (itemList.item[i].id == 0) break;    
+    if (itemList.item[i].id == 0) break;
     id[itemList.item[i].id] = itemList.item[i].amount;
 }
 OutputPaneClear();

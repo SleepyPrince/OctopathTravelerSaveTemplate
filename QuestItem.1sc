@@ -1,0 +1,33 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Script File
+//
+//   Authors: SleepyPrince
+//   Purpose: Find Quest Items ID
+//------------------------------------------------
+
+/*
+          ===== Caution! =====
+ Backup your game before using this script!!
+ This script is for research purpose only
+ It will change the amount of "Valuables" that
+ are not in the database to unique numbers
+ i.e. from 1 (normal value) to 2,3,4...etc
+ and print them out in the Output window
+ So that you can compare them with your game
+*/
+
+int i;
+int id[2600];
+itemID item;
+int x = 2;
+OutputPaneClear();
+Printf("ID\tAmount\n");
+for (i=0; i<2000; i++){
+    item = itemList.item[i].id;    
+    if (EnumToString(item) == "" && item != 0 && (item >= 500 || item < 1000)){
+        itemList.item[i].amount = x;
+        Printf("%d\t%d\n", item, x);
+        x++;
+    }
+    id[itemList.item[i].id] = itemList.item[i].amount;
+}
