@@ -8,8 +8,9 @@ int i;
 int id[2600];
 itemID item;
 for (i=0; i<2000; i++){
-    if (itemList.item[i].id == 0) break;
-    id[itemList.item[i].id] = itemList.item[i].amount;
+    id[Inventory.item[i].id] = 0;
+    if (Inventory.item[i].id == 0) break;
+    id[Inventory.item[i].id] = Inventory.item[i].amount;
 }
 OutputPaneClear();
 Printf("ID\tName\tAmount\n");
