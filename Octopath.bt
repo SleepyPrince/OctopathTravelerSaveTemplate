@@ -7,9 +7,9 @@
 //   Purpose: Octopath Traveler Save File Template
 //------------------------------------------------
 typedef struct dataStruct{
-    string name <read=dataStructRead, write=dataStructWrite>;
+    string name <hidden=true>;
     FSkip(4);
-    string property <read=dataStructRead, write=dataStructWrite>;
+    string property <hidden=true>;
     if (property == "IntProperty")
     {
         FSkip(9);
@@ -17,8 +17,8 @@ typedef struct dataStruct{
         FSkip(4);
     }else if(property == "ArrayProperty"){
         FSkip(8);    
-        uint size <read=dataStructRead, write=dataStructWrite>;
-        string type <read=dataStructRead, write=dataStructWrite>;
+        uint size <hidden=true>;
+        string type <hidden=true>;
         FSkip(1);
         int value;
         FSkip(4);
@@ -729,20 +729,20 @@ typedef struct Character {
     dataStruct Accessory <read=equipRead>;
     dataStruct Accessory <read=equipRead>;
 
-    // DopingParam ?
+    // DopingParam
     FSeek(FindFirst("HP_",true,false,0,0,1,FTell()));
-    dataStruct HP <hidden=true>;
-    dataStruct MP <hidden=true>;
-    dataStruct BP <hidden=true>;
-    dataStruct SP <hidden=true>;
-    dataStruct ATK <hidden=true>;
-    dataStruct DEF <hidden=true>;
-    dataStruct MATK <hidden=true>;
-    dataStruct MDEF <hidden=true>;
-    dataStruct ACC <hidden=true>;
-    dataStruct EVA <hidden=true>;
-    dataStruct CON <hidden=true>;
-    dataStruct AGI <hidden=true>;
+    dataStruct Extra_HP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_MP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_BP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_SP <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_ATK <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_DEF <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_MATK <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_MDEF <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_ACC <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_EVA <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_CON <read=dataStructRead, write=dataStructWrite>;
+    dataStruct Extra_AGI <read=dataStructRead, write=dataStructWrite>;
 };
 
 local int i;
@@ -784,26 +784,6 @@ string charRead(Character &c){
     CharName name;
     name = c.ID.value;
     return EnumToString(name);
-    /*switch (c.ID.value){
-        case 1:
-            return "Olberic";
-        case 2:
-            return "Tressa";
-        case 3:
-            return "Cyrus";
-        case 4:
-            return "Primrose";
-        case 5:
-            return "H'annit";
-        case 6:
-            return "Therion";
-        case 7:
-            return "Ophilia";
-        case 8:
-            return "Alfyn";
-        default:
-            return "Unknown";
-    }*/
 }
 
 string dataStructRead(dataStruct &d){
