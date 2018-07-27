@@ -24,8 +24,8 @@ typedef struct {
         FSkip(8);
         int value;
     }else if(property == "BoolProperty"){
-        FSkip(6);
-        uint value:1;
+        FSkip(8);
+        ushort value:1;
     }else if(property == "ArrayProperty"){
         uint dataSize <hidden=true>;
         FSkip(8);
@@ -184,6 +184,20 @@ struct ConnectionList{
         dataStruct ConnectionValue <read=dataStructRead, write=dataStructWrite>;
     }
 } TownData <comment="Not yet fully documented, edit at your own risk">;
+
+// TameMonsterData
+FSeek(FindFirst("TameMonsterData")-4);
+local TFindResults TameMonsterAddr = FindAll("EnemyID");
+struct TameMonster{
+    for ( i = 0; i < 10; i++){
+        FSeek(TameMonsterAddr.start[i]-4);    
+        struct {
+            dataStruct EnemyID <read=dataStructRead, write=dataStructWrite>;
+            dataStruct Count <read=dataStructRead, write=dataStructWrite>;
+            dataStruct Used <read=dataStructRead, write=dataStructWrite>;
+        } TameMonster;
+    }
+} TameMonsterData;
 
 // WeaknessOpen
 FSeek(FindFirst("EnemyInfoData")-4);
